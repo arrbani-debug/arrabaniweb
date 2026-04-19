@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Belajar html dan css - Praktikum</title>
+<style>
+  /* Reset Dasar */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+    background-color: #f0f2f5;
+    color: #333;
+    line-height: 1.6;
+    overflow-x: hidden;
+}
+
+/* --- Header --- */
+header {
+    background: linear-gradient(135deg, #2c3e50, #3498db);
+    color: white;
+    text-align: center;
+    padding: 2rem 1rem;
+    animation: fadeInDown 0.8s ease-out;
+}
+
+/* --- Navbar (Flexbox) --- */
+.navbar {
+    background-color: #ffffff;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+.navbar ul {
+    display: flex; /* Flexbox digunakan di sini */
+    justify-content: center;
+    list-style: none;
+}
+
+.navbar a {
+    display: block;
+    padding: 1rem 1.5rem;
+    text-decoration: none;
+    color: #2c3e50;
+    font-weight: bold;
+    transition: 0.3s;
+}
+
+.navbar a:hover {
+    background-color: #3498db;
+    color: white;
+}
+
+/* --- Layout Utama (CSS Grid) --- */
+.container {
+    display: grid; /* Grid Layout */
+    grid-template-columns: 3fr 1fr; /* Konten 3 bagian, Sidebar 1 bagian */
+    gap: 20px;
+    padding: 20px;
+    max-width: 1200px;
+    margin: auto;
+}
+
+.content-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 15px;
+}
+
+.card {
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+    transition: transform 0.3s ease;
+}
+
+.card:hover {
+    transform: translateY(-5px); /* Animasi bergerak sedikit ke atas saat hover */
+    box-shadow: 0 8px 15px rgba(0,0,0,0.1);
+}
+
+.sidebar {
+    background: #e3f2fd;
+    padding: 20px;
+    border-radius: 8px;
+    height: fit-content;
+}
+
+/* --- Footer --- */
+footer {
+    text-align: center;
+    padding: 1.5rem;
+    background: #2c3e50;
+    color: white;
+    margin-top: 20px;
+}
+
+/* --- Animasi --- */
+@keyframes fadeInDown {
+    from { opacity: 0; transform: translateY(-20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.fade-in {
+    animation: fadeInUp 1s ease-out;
+}
+
+@keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.slide-in {
+    animation: slideInRight 1s ease-out;
+}
+
+@keyframes slideInRight {
+    from { opacity: 0; transform: translateX(50px); }
+    to { opacity: 1; transform: translateX(0); }
+}
+
+/* --- Responsif (Media Query) --- */
+@media (max-width: 768px) {
+    .container {
+        grid-template-columns: 1fr; /* Menjadi 1 kolom saat layar kecil */
+    }
+    
+    .navbar ul {
+        flex-direction: column;
+        text-align: center;
+    }
+}
+
+/* --- Logic Switch Page --- */
+.page {
+    display: none; /* Sembunyikan semua halaman secara default */
+}
+
+.page.active {
+    display: block; /* Hanya tampilkan yang punya class active */
+    animation: fadeIn 0.5s ease-in;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+/* Memastikan konten grid tetap berjalan saat active */
+#beranda.active {
+    display: block;
+}
+
+/* --- Penyesuaian Cursor --- */
+.navbar a {
+    cursor: pointer;
+}
+
+
+/* Framework Modal Overlay */
+.modal-overlay {
+    display: none; /* Sembunyi secara default */
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.7); /* Background gelap transparan */
+    z-index: 2000;
+    justify-content: center;
+    align-items: center;
+    backdrop-filter: blur(5px); /* Efek blur pada background */
+    animation: fadeIn 0.3s ease;
+}
+
+/* Card Profil */
+.profile-card {
+    background: white;
+    width: 320px;
+    padding: 30px;
+    border-radius: 15px;
+    text-align: center;
+    position: relative;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+    animation: scaleUp 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.profile-img {
+    font-size: 50px;
+    background: #3498db;
+    width: 80px;
+    height: 80px;
+    line-height: 80px;
+    border-radius: 50%;
+    margin: 0 auto 15px;
+    color: white;
+}
+
+.close-btn {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    font-size: 24px;
+    cursor: pointer;
+    color: #999;
+}
+
+.btn-close-manual {
+    margin-top: 20px;
+    padding: 10px 20px;
+    background: #e74c3c;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.btn-close-manual:hover {
+    background: #c0392b;
+}
+
+/* Animasi Framework */
+@keyframes scaleUp {
+    from { transform: scale(0.7); opacity: 0; }
+    to { transform: scale(1); opacity: 1; }
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+/* Card Informasi */
+.info-card {
+    background: white;
+    width: 400px; /* Sedikit lebih lebar dari profil */
+    max-width: 90%;
+    padding: 25px;
+    border-radius: 12px;
+    position: relative;
+    box-shadow: 0 15px 35px rgba(0,0,0,0.4);
+    animation: slideInBottom 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.1);
+}
+
+.info-header {
+    text-align: center;
+    border-bottom: 2px solid #3498db;
+    padding-bottom: 10px;
+    margin-bottom: 20px;
+}
+
+.info-icon {
+    font-size: 40px;
+}
+
+.info-item {
+    margin-bottom: 15px;
+    text-align: left;
+}
+
+.info-item h4 {
+    color: #2c3e50;
+    margin-bottom: 5px;
+}
+
+.info-item p {
+    font-size: 0.9rem;
+    color: #666;
+}
+
+hr {
+    border: 0;
+    border-top: 1px solid #eee;
+    margin-bottom: 15px;
+}
+
+.btn-close-info {
+    width: 100%;
+    padding: 12px;
+    background: #3498db;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.btn-close-info:hover {
+    background: #2980b9;
+    letter-spacing: 1px;
+}
+
+/* Animasi Khusus Informasi */
+@keyframes slideInBottom {
+    from { transform: translateY(100px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+}
+
+</style>
+</head>
+<body>
+
+    <header>
+        <h1>Belajar html dan css</h1>
+        <p>Mari kita belajar bersama temen-temen</p>
+    </header>
+
+    <nav class="navbar">
+        <ul>
+            <li><a href="javascript:void(0)" onclick="switchPage('beranda')">Beranda</a></li>
+            <li><a href="javascript:void(0)" onclick="showProfile()">Profil</a></li>
+            <li><a href="javascript:void(0)" onclick="showInfo('infoModal')">Informasi</a></li>
+        </ul>
+    </nav>
+
+    <main class="container">
+        <section id="beranda" class="page active">
+            <div class="content-grid">
+                <article class="card fade-in">
+                    <h3>Konten Utama 1</h3>
+                    <p> Konten konten masih Kosong </p>
+                </article>
+                <article class="card fade-in">
+                    <h3>Konten Utama 2</h3>
+                    <p>Setiap kartu memiliki efek hover dan animasi muncul.</p>
+                </article>
+            </div>
+        </section>
+
+<div id="profileModal" class="modal-overlay" onclick="closeProfile(event)">
+    <div class="profile-card" onclick="event.stopPropagation()">
+        <span class="close-btn" onclick="closeProfile()">&times;</span>
+        <div class="profile-header">
+            <div class="profile-img">👤</div>
+            <h2>Profil Mahasiswa</h2>
+        </div>
+        <div class="profile-body">
+            <p><strong>Nama:</strong> Roikhatul Jannah</p>
+            <p><strong>NIM:</strong> 202503051</p>
+            <p><strong>Jurusan:</strong> Pendidikan Informatika</p>
+            <p class="bio">Sedang belajar membangun framework UI sederhana dengan HTML dan Style Css</p>
+        </div>
+        <button class="btn-close-manual" onclick="closeProfile()">Tutup</button>
+    </div>
+</div>
+
+<div id="infoModal" class="modal-overlay" onclick="closeInfo(event)">
+    <div class="info-card" onclick="event.stopPropagation()">
+        <span class="close-btn" onclick="closeInfo()">&times;</span>
+        <div class="info-header">
+            <div class="info-icon">📢</div>
+            <h2>Pusat Informasi</h2>
+        </div>
+        <div class="info-body">
+            <div class="info-item">
+                <h4>Data Diri</h4>
+                <p>Seorang Mahasiswa Dari STKIP NU Tegal</p>
+            </div>
+            <hr>
+            <div class="info-item">
+                <h4>Semester </h4>
+                <p>Sekarang Roikhatul Jannah Menduduki Semester 2 di STKIP NU Tegal</p>
+            </div>
+            <hr>
+            <div class="info-item">
+                <h4> Tips Belajar</h4>
+                <p>Jangan pernah menyerah dan jadilah dirimu sendiri</p>
+            </div>
+        </div>
+        <button class="btn-close-info" onclick="closeInfo()">Selesai Membaca</button>
+    </div>
+</div>
+
+        <section id="informasi" class="page">
+            <article class="card fade-in">
+                <h3>Informasi Terbaru</h3>
+                <p>Halaman ini berisi berita dan update terbaru mengenai praktikum web.</p>
+            </article>
+        </section>
+
+        <aside class="sidebar slide-in">
+            <h3>Sidebar</h3>
+            <ul>
+                <li>Info Terbaru</li>
+                <li>Link Terkait</li>
+                <li>Pengumuman</li>
+            </ul>
+        </aside>
+    </main>
+
+    <footer>
+        <p>&copy;Di buat Oleh Roikhatul Jannah Sebagai memenuhi Tugas kuliah</p>
+    </footer><script>
+    // Fungsi khusus untuk Profil
+    function showProfile() {
+        document.getElementById('profileModal').style.display = 'flex';
+    }
+
+    function closeProfile() {
+        document.getElementById('profileModal').style.display = 'none';
+    }
+
+    // Fungsi khusus untuk Informasi
+    function showInfo() {
+        document.getElementById('infoModal').style.display = 'flex';
+    }
+
+    function closeInfo() {
+        document.getElementById('infoModal').style.display = 'none';
+    }
+
+    // Tambahan: Menutup modal jika area luar (overlay) diklik
+    window.onclick = function(event) {
+        if (event.target == document.getElementById('profileModal')) {
+            closeProfile();
+        }
+        if (event.target == document.getElementById('infoModal')) {
+            closeInfo();
+        }
+    }
+</script>
+
+
+</body>
+</html>
